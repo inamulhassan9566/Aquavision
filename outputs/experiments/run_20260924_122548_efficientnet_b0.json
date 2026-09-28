@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-09-24T12:25:48.467136",
+  "architecture": "efficientnet_b0",
+  "best_epoch": 4,
+  "best_val_f1": 0.9307,
+  "training_time_seconds": 1173.87,
+  "device": "cpu",
+  "config": {
+    "project": {
+      "name": "AQUAVISION",
+      "subtitle": "AI-Based Oil Spill Detection and Vessel Attribution",
+      "version": "1.0.0"
+    },
+    "dataset": {
+      "raw_dir": "data/raw",
+      "splits_dir": "data/splits",
+      "image_size": 224,
+      "batch_size": 64,
+      "num_workers": 0,
+      "train_ratio": 0.7,
+      "val_ratio": 0.15,
+      "test_ratio": 0.15,
+      "filter_zero_variance": true,
+      "random_seed": 42
+    },
+    "model": {
+      "architecture": "efficientnet_b0",
+      "num_classes": 2,
+      "pretrained": true,
+      "in_channels": 3,
+      "dropout": 0.2
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 5,
+      "learning_rate": 0.0008,
+      "weight_decay": 0.0001,
+      "optimizer": "adamw",
+      "scheduler": "cosine",
+      "early_stopping_patience": 3,
+      "use_class_weights": true,
+      "freeze_early_layers": true,
+      "device": "auto",
+      "checkpoint_dir": "models",
+      "outputs_dir": "outputs"
+    }
+  },
+  "final_epoch_metrics": {
+    "val_accuracy": 0.9505,
+    "val_f1": 0.9242,
+    "val_precision": 0.9434,
+    "val_recall": 0.9058,
+    "val_roc_auc": 0.9856
+  }
+}

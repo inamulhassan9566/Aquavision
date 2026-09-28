@@ -1,0 +1,17 @@
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Target execution device: cpu (CPU)
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Dataset partitions loaded: 3869 Train samples, 829 Val samples
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Class-weighted Loss enabled: Class 0 weight=0.750, Class 1 weight=1.500
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Model architecture 'efficientnet_b0' instantiated (Pretrained=True, Dropout=0.2)
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Transfer learning: Froze early backbone feature stages [:-2], fine-tuning top blocks and classifier head.
+[2026-09-24 12:06:13] [INFO] [aquavision.train]: Commencing training across 5 epochs...
+[2026-09-24 12:10:06] [INFO] [aquavision.train]: Epoch [1/5] Train Loss: 0.3638 | Train Acc: 84.44% | Val Loss: 0.3423 | Val Acc: 89.51% | Val F1: 0.8284 | Val AUC: 0.9561 | LR: 0.000800
+[2026-09-24 12:10:06] [INFO] [aquavision.train]: --> Saved best model checkpoint at Epoch 1 with Val F1: 0.8284
+[2026-09-24 12:13:48] [INFO] [aquavision.train]: Epoch [2/5] Train Loss: 0.2412 | Train Acc: 91.08% | Val Loss: 0.1927 | Val Acc: 94.57% | Val F1: 0.9165 | Val AUC: 0.9768 | LR: 0.000724
+[2026-09-24 12:13:48] [INFO] [aquavision.train]: --> Saved best model checkpoint at Epoch 2 with Val F1: 0.9165
+[2026-09-24 12:17:35] [INFO] [aquavision.train]: Epoch [3/5] Train Loss: 0.1867 | Train Acc: 93.18% | Val Loss: 0.1732 | Val Acc: 94.81% | Val F1: 0.9220 | Val AUC: 0.9817 | LR: 0.000524
+[2026-09-24 12:17:35] [INFO] [aquavision.train]: --> Saved best model checkpoint at Epoch 3 with Val F1: 0.9220
+[2026-09-24 12:21:18] [INFO] [aquavision.train]: Epoch [4/5] Train Loss: 0.1705 | Train Acc: 93.56% | Val Loss: 0.1670 | Val Acc: 95.42% | Val F1: 0.9307 | Val AUC: 0.9838 | LR: 0.000277
+[2026-09-24 12:21:18] [INFO] [aquavision.train]: --> Saved best model checkpoint at Epoch 4 with Val F1: 0.9307
+[2026-09-24 12:25:47] [INFO] [aquavision.train]: Epoch [5/5] Train Loss: 0.1550 | Train Acc: 94.13% | Val Loss: 0.1627 | Val Acc: 95.05% | Val F1: 0.9242 | Val AUC: 0.9856 | LR: 0.000077
+[2026-09-24 12:25:47] [INFO] [aquavision.train]: Training completed in 1173.9s. Best Epoch: 4 (Val F1: 0.9307)
+[2026-09-24 12:25:48] [INFO] [aquavision.train]: Experiment log saved to outputs\experiments\run_20260924_122548_efficientnet_b0.json

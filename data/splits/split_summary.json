@@ -1,0 +1,28 @@
+{
+  "random_seed": 42,
+  "total_samples": 5528,
+  "zero_variance_excluded_count": 10,
+  "splits": {
+    "train": {
+      "count": 3869,
+      "ratio": 0.6999,
+      "class_0_count": 2579,
+      "class_1_count": 1290,
+      "class_1_pct": 33.34
+    },
+    "validation": {
+      "count": 829,
+      "ratio": 0.15,
+      "class_0_count": 553,
+      "class_1_count": 276,
+      "class_1_pct": 33.29
+    },
+    "test": {
+      "count": 830,
+      "ratio": 0.1501,
+      "class_0_count": 553,
+      "class_1_count": 277,
+      "class_1_pct": 33.37
+    }
+  }
+}

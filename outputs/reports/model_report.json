@@ -1,0 +1,106 @@
+{
+  "project": "AQUAVISION",
+  "dataset_name": "Sentinel-1 SAR Oil Spill Detection Dataset",
+  "task": "Binary Classification (Oil Spill vs. No Oil Spill)",
+  "model_architecture": "efficientnet_b0",
+  "model_checkpoint": "models\\best_model.pth",
+  "best_epoch": 4,
+  "training_configuration": {
+    "seed": 42,
+    "epochs": 5,
+    "learning_rate": 0.0008,
+    "weight_decay": 0.0001,
+    "optimizer": "adamw",
+    "scheduler": "cosine",
+    "early_stopping_patience": 3,
+    "use_class_weights": true,
+    "freeze_early_layers": true,
+    "device": "auto",
+    "checkpoint_dir": "models",
+    "outputs_dir": "outputs"
+  },
+  "dataset_statistics": {
+    "total_curated_chips": 5528,
+    "training_samples": 3869,
+    "validation_samples": 829,
+    "test_samples": 830,
+    "oil_spill_percentage": 33.37
+  },
+  "validation_metrics": {
+    "accuracy": 0.9542,
+    "precision": 0.9375,
+    "recall": 0.9239,
+    "f1_score": 0.9307,
+    "roc_auc": 0.9838,
+    "specificity": 0.9693,
+    "confusion_matrix": {
+      "true_negative": 536,
+      "false_positive": 17,
+      "false_negative": 21,
+      "true_positive": 255,
+      "matrix": [
+        [
+          536,
+          17
+        ],
+        [
+          21,
+          255
+        ]
+      ]
+    },
+    "per_class": {
+      "no_oil": {
+        "precision": 0.9623,
+        "recall": 0.9693,
+        "support": 553
+      },
+      "oil_spill": {
+        "precision": 0.9375,
+        "recall": 0.9239,
+        "support": 276
+      }
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.9482,
+    "precision": 0.912,
+    "recall": 0.935,
+    "f1_score": 0.9234,
+    "roc_auc": 0.9821,
+    "specificity": 0.9548,
+    "confusion_matrix": {
+      "true_negative": 528,
+      "false_positive": 25,
+      "false_negative": 18,
+      "true_positive": 259,
+      "matrix": [
+        [
+          528,
+          25
+        ],
+        [
+          18,
+          259
+        ]
+      ]
+    },
+    "per_class": {
+      "no_oil": {
+        "precision": 0.967,
+        "recall": 0.9548,
+        "support": 553
+      },
+      "oil_spill": {
+        "precision": 0.912,
+        "recall": 0.935,
+        "support": 277
+      }
+    }
+  },
+  "limitations": [
+    "Trained and evaluated on curated Sentinel-1 SAR chips (400x400) without raw satellite scene geolocation.",
+    "Radar look-alikes (low wind zones, biogenic films) can occasionally trigger false positives.",
+    "Grad-CAM provides visual attention attribution, not fine-grained pixel-level segmentation."
+  ]
+}

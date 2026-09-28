@@ -1,0 +1,124 @@
+{
+  "dataset_name": "Sentinel-1 SAR Oil Spill Detection Dataset (CSIRO / Kaggle)",
+  "source_url": "https://www.kaggle.com/datasets/harikrishnacs/sentinel-1-sar-oil-spill-detection-dataset",
+  "classes": {
+    "Class_0": {
+      "class_id": 0,
+      "description": "No Oil Spill (Look-alikes / Clean Sea)",
+      "count": 3695,
+      "id_range": "1 to 3695",
+      "missing_in_sequence": 0,
+      "percentage": 66.72
+    },
+    "Class_1": {
+      "class_id": 1,
+      "description": "Oil Spill",
+      "count": 1843,
+      "id_range": "1 to 1843",
+      "missing_in_sequence": 0,
+      "percentage": 33.28
+    }
+  },
+  "summary": {
+    "total_images": 5538,
+    "class_0_count": 3695,
+    "class_1_count": 1843,
+    "class_0_percentage": 66.72,
+    "class_1_percentage": 33.28,
+    "imbalance_ratio": 2.005,
+    "dimensions": [
+      [
+        400,
+        400
+      ]
+    ],
+    "color_modes": [
+      "RGB"
+    ],
+    "file_formats": [
+      "JPEG"
+    ],
+    "channel_characteristics": "SAR 1-band microwave backscatter encoded into 3-channel duplicate RGB JPEG",
+    "file_size_bytes_mean": 12359.62,
+    "file_size_bytes_min": 3126,
+    "file_size_bytes_max": 43989
+  },
+  "data_integrity": {
+    "corrupted_files_count": 0,
+    "corrupted_files": [],
+    "exact_duplicates_count": 0,
+    "exact_duplicate_groups": []
+  },
+  "pixel_statistics": {
+    "Class_0": {
+      "mean": 0.5385,
+      "std_of_means": 0.1961,
+      "average_patch_std": 0.1078
+    },
+    "Class_1": {
+      "mean": 0.4823,
+      "std_of_means": 0.1532,
+      "average_patch_std": 0.0558
+    },
+    "global_norm_suggested": {
+      "mean": 0.5198,
+      "std": 0.0905
+    }
+  },
+  "anomalies": {
+    "zero_variance_images_count": 10,
+    "zero_variance_images": [
+      {
+        "class": "Class_0",
+        "filename": "class_0_00078.jpg",
+        "constant_pixel_value": 142
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00109.jpg",
+        "constant_pixel_value": 215
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00153.jpg",
+        "constant_pixel_value": 145
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00246.jpg",
+        "constant_pixel_value": 222
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00268.jpg",
+        "constant_pixel_value": 166
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00294.jpg",
+        "constant_pixel_value": 212
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00306.jpg",
+        "constant_pixel_value": 191
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_00519.jpg",
+        "constant_pixel_value": 188
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_02909.jpg",
+        "constant_pixel_value": 194
+      },
+      {
+        "class": "Class_0",
+        "filename": "class_0_02934.jpg",
+        "constant_pixel_value": 255
+      }
+    ],
+    "recommendation": "The 10 uniform artifact chips in Class_0 have zero information; can be retained or filtered with full documentation."
+  }
+}

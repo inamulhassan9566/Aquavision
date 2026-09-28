@@ -1,0 +1,12 @@
+[2026-09-24 12:26:10] [INFO] [aquavision.evaluate]: Evaluation running on device: cpu
+[2026-09-24 12:26:10] [INFO] [aquavision.evaluate]: Loaded best checkpoint from Epoch 4 (efficientnet_b0)
+[2026-09-24 12:26:10] [INFO] [aquavision.evaluate]: Test dataset loaded: 830 unseen SAR chips
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: === HELD-OUT TEST EVALUATION RESULTS ===
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: Accuracy:    94.82%
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: Precision:   91.20%
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: Recall:      93.50%
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: F1-Score:    0.9234
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: ROC-AUC:     0.9821
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: Specificity: 95.48%
+[2026-09-24 12:26:49] [INFO] [aquavision.evaluate]: Confusion Matrix: [[528, 25], [18, 259]]
+[2026-09-24 12:26:50] [INFO] [aquavision.evaluate]: All reports and visual plots saved to outputs\reports
