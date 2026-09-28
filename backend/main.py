@@ -240,14 +240,14 @@ async def predict_with_explanation(file: UploadFile = File(...)):
             save_artifacts_dir=UPLOAD_DIR
         )
 
-        # Convert local file paths into relative URLs for the web client
+        # Convert local file paths into relative URLs for the web client, or use base64 data URLs
         orig_name = Path(res["image_path"]).name if res.get("image_path") else ""
         cam_name = Path(res["gradcam_path"]).name if res.get("gradcam_path") else ""
         overlay_name = Path(res["overlay_path"]).name if res.get("overlay_path") else ""
 
-        orig_url = f"/static/uploads/{orig_name}" if orig_name else ""
-        cam_url = f"/static/uploads/{cam_name}" if cam_name else ""
-        overlay_url = f"/static/uploads/{overlay_name}" if overlay_name else ""
+        orig_url = res.get("original_image_url") or (f"/static/uploads/{orig_name}" if orig_name else "")
+        cam_url = res.get("gradcam_image_url") or (f"/static/uploads/{cam_name}" if cam_name else "")
+        overlay_url = res.get("overlay_image_url") or (f"/static/uploads/{overlay_name}" if overlay_name else "")
 
         # Persist to SQLite Incidents Table
         incident_record = {

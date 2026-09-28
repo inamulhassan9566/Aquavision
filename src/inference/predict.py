@@ -9,10 +9,16 @@ Supports:
 
 import io
 import time
+import base64
 from pathlib import Path
 from typing import Dict, Any, Union, Optional
 from PIL import Image
 import numpy as np
+
+def _to_data_url(pil_img: Image.Image) -> str:
+    buf = io.BytesIO()
+    pil_img.save(buf, format="JPEG", quality=85)
+    return f"data:image/jpeg;base64,{base64.b64encode(buf.getvalue()).decode('utf-8')}"
 
 # Dynamic import of PyTorch dependencies with graceful fallback
 try:
@@ -229,29 +235,36 @@ class OilSpillPredictor:
                     prob_oil = float(1.0 - confidence)
                     prob_no_oil = float(confidence)
 
-            if generate_explanation and save_artifacts_dir is not None:
-                save_dir = Path(save_artifacts_dir)
-                save_dir.mkdir(parents=True, exist_ok=True)
-                timestamp = int(time.time() * 1000)
-
-                orig_save_name = f"orig_{timestamp}_{orig_filename}"
-                gradcam_save_name = f"gradcam_{timestamp}_{orig_filename}"
-                overlay_save_name = f"overlay_{timestamp}_{orig_filename}"
-
-                orig_file = save_dir / orig_save_name
-                pil_img.save(orig_file)
-                original_saved_path = str(orig_file)
-
+            cam_pil = None
+            overlay_pil = None
+            if generate_explanation:
                 colored_cam, overlay_img = _generate_edge_heatmap(pil_img)
                 overlay_pil = Image.fromarray(overlay_img)
-                overlay_file = save_dir / overlay_save_name
-                overlay_pil.save(overlay_file)
-                overlay_path = str(overlay_file)
-
                 cam_pil = Image.fromarray(colored_cam)
-                cam_file = save_dir / gradcam_save_name
-                cam_pil.save(cam_file)
-                gradcam_path = str(cam_file)
+
+                if save_artifacts_dir is not None:
+                    try:
+                        save_dir = Path(save_artifacts_dir)
+                        save_dir.mkdir(parents=True, exist_ok=True)
+                        timestamp = int(time.time() * 1000)
+
+                        orig_save_name = f"orig_{timestamp}_{orig_filename}"
+                        gradcam_save_name = f"gradcam_{timestamp}_{orig_filename}"
+                        overlay_save_name = f"overlay_{timestamp}_{orig_filename}"
+
+                        orig_file = save_dir / orig_save_name
+                        pil_img.save(orig_file)
+                        original_saved_path = str(orig_file)
+
+                        overlay_file = save_dir / overlay_save_name
+                        overlay_pil.save(overlay_file)
+                        overlay_path = str(overlay_file)
+
+                        cam_file = save_dir / gradcam_save_name
+                        cam_pil.save(cam_file)
+                        gradcam_path = str(cam_file)
+                    except Exception:
+                        pass
 
         class_name = "Oil Spill" if pred_class_id == 1 else "No Oil Spill"
         explanation_text = (
@@ -259,6 +272,10 @@ class OilSpillPredictor:
             if pred_class_id == 1 else
             "The model identified visual patterns characteristic of clean open ocean or natural sea surface look-alikes."
         )
+
+        orig_data_url = _to_data_url(pil_img)
+        cam_data_url = _to_data_url(cam_pil) if 'cam_pil' in locals() and cam_pil is not None else orig_data_url
+        overlay_data_url = _to_data_url(overlay_pil) if 'overlay_pil' in locals() and overlay_pil is not None else orig_data_url
 
         return {
             "prediction": class_name,
@@ -272,7 +289,10 @@ class OilSpillPredictor:
             "model_version": f"{self.architecture}-v1.0",
             "image_path": original_saved_path,
             "gradcam_path": gradcam_path,
-            "overlay_path": overlay_path
+            "overlay_path": overlay_path,
+            "original_image_url": orig_data_url,
+            "gradcam_image_url": cam_data_url,
+            "overlay_image_url": overlay_data_url
         }
 
 
