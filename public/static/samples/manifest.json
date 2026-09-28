@@ -1,0 +1,50 @@
+[
+  {
+    "filename": "class_1_01727.jpg",
+    "class_id": 1,
+    "class_name": "Oil Spill",
+    "url": "/static/samples/class_1_01727.jpg"
+  },
+  {
+    "filename": "class_1_01082.jpg",
+    "class_id": 1,
+    "class_name": "Oil Spill",
+    "url": "/static/samples/class_1_01082.jpg"
+  },
+  {
+    "filename": "class_1_01280.jpg",
+    "class_id": 1,
+    "class_name": "Oil Spill",
+    "url": "/static/samples/class_1_01280.jpg"
+  },
+  {
+    "filename": "class_1_01785.jpg",
+    "class_id": 1,
+    "class_name": "Oil Spill",
+    "url": "/static/samples/class_1_01785.jpg"
+  },
+  {
+    "filename": "class_0_02361.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_02361.jpg"
+  },
+  {
+    "filename": "class_0_00405.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_00405.jpg"
+  },
+  {
+    "filename": "class_0_03291.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_03291.jpg"
+  },
+  {
+    "filename": "class_0_02818.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_02818.jpg"
+  }
+]

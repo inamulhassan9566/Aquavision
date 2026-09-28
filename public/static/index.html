@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQUAVISION — AI Maritime Intelligence Platform</title>
+  <meta name="description" content="AI-Based Oil Spill Detection and Attribution using Sentinel-1 SAR Satellite Imagery (Smart India Hackathon 2026)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+  <!-- Top Maritime Header -->
+  <header>
+    <div class="header-container">
+      <div class="brand">
+        <div class="radar-logo">
+          <div class="radar-sweep"></div>
+        </div>
+        <div class="brand-text">
+          <h1>AQUAVISION</h1>
+          <p>AI MARITIME INTELLIGENCE &bull; SENTINEL-1 SAR</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-tab active" data-target="dashboard-panel">
+          <span>📡</span> Radar Analysis
+        </button>
+        <button class="nav-tab" data-target="incidents-panel">
+          <span>📋</span> Incident History
+        </button>
+        <button class="nav-tab" data-target="model-panel">
+          <span>📊</span> Model Intelligence
+        </button>
+        <button class="nav-tab" data-target="roadmap-panel">
+          <span>🌐</span> Future Roadmap
+        </button>
+      </nav>
+
+      <div class="status-badge">
+        <span class="pulse-dot"></span>
+        <span>PROTOTYPE ENGINE ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Prototype Scientific Disclaimer Banner -->
+    <div class="prototype-notice">
+      <div>
+        <strong>System Notice:</strong> Prototype — Sentinel-1 SAR image analysis using a predefined training dataset (CSIRO Deep Learning SAR collection).
+      </div>
+      <div style="color: var(--text-dim); font-size: 0.78rem;">
+        Phase 1 Working Prototype &bull; Zero Fabricated Live Feeds &bull; Scientific Integrity First
+      </div>
+    </div>
+
+    <!-- TAB 1: RADAR ANALYSIS DASHBOARD -->
+    <div id="dashboard-panel" class="tab-panel active">
+      <div class="grid-2col">
+
+        <!-- Left Column: Acquisition & Input -->
+        <div>
+          <div class="card">
+            <h2 class="card-title"><span>🛰️</span> SAR Image Ingestion</h2>
+
+            <div class="dropzone" id="dropzone">
+              <div class="dropzone-icon">📥</div>
+              <h3>Upload Sentinel-1 SAR Chip</h3>
+              <p>Drag & drop 400x400 C-band SAR chip or click to browse</p>
+              <p style="margin-top: 0.35rem; color: var(--text-dim); font-size: 0.75rem;">Supported: .jpg, .jpeg, .png, .tif</p>
+              <input type="file" id="file-input" accept="image/*" style="display: none;">
+              <button type="button" class="btn-primary" id="upload-btn" onclick="document.getElementById('file-input').click()">
+                Select Image File
+              </button>
+            </div>
+
+            <div id="selected-filename" style="display: none; margin-top: 0.75rem; font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-cyan-light);"></div>
+
+            <!-- Quick Preset Samples for One-Click Evaluation -->
+            <div class="sample-gallery">
+              <div class="sample-title">
+                <span>Or Select Preset SAR Test Chips (Held-Out Test Set)</span>
+                <span style="color: var(--accent-cyan-light); font-size: 0.75rem;">1-Click Instant Test</span>
+              </div>
+              <div class="sample-chips" id="sample-chips-container">
+                <!-- Dynamically loaded sample chips -->
+              </div>
+            </div>
+
+            <div style="margin-top: 1.25rem;">
+              <button type="button" class="btn-primary" id="analyze-btn" disabled style="width: 100%; padding: 0.75rem; font-size: 0.95rem;">
+                Run AI Detection & Grad-CAM Analysis &rarr;
+              </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="analysis-status" style="display: none; margin-top: 1rem; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: rgba(14, 165, 233, 0.08); border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2);">
+              <span class="pulse-dot"></span>
+              <span style="font-size: 0.88rem; font-weight: 600; color: var(--accent-cyan-light);">
+                Analyzing satellite SAR microwave backscatter...
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: AI Inference & Visual Attention -->
+        <div>
+          <div class="card">
+            <h2 class="card-title"><span>🔍</span> AI Classification & Visual Explainability</h2>
+
+            <!-- Default Blank State -->
+            <div id="detection-placeholder" style="text-align: center; padding: 1rem 0; color: var(--text-dim);">
+              <p>Upload a SAR chip or select a preset sample to view real-time AI classification and Grad-CAM attention heatmap.</p>
+            </div>
+
+            <!-- Detection Results Card -->
+            <div id="detection-card" class="detection-card no-oil" style="display: none;">
+              <div class="detection-header">
+                <div class="detection-label" id="detection-label">
+                  🟢 NO OIL SPILL DETECTED
+                </div>
+                <div class="confidence-badge" id="confidence-badge">
+                  Confidence: --%
+                </div>
+              </div>
+
+              <!-- Probability Bars -->
+              <div class="prob-bars">
+                <div class="prob-item">
+                  <div class="prob-header">
+                    <span>Oil Spill Probability</span>
+                    <span id="oil-prob-text" style="color: var(--alert-red); font-family: var(--font-mono); font-weight: 700;">0.0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill oil" id="oil-prob-fill" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div class="prob-item">
+                  <div class="prob-header">
+                    <span>No-Oil (Clean Sea) Probability</span>
+                    <span id="nooil-prob-text" style="color: var(--accent-cyan-light); font-family: var(--font-mono); font-weight: 700;">0.0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill no-oil" id="nooil-prob-fill" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tri-Panel Visual Attention Inspector -->
+            <div class="inspector-grid">
+              <div class="panel-box">
+                <div class="panel-header">1. Original SAR Chip</div>
+                <img id="preview-original" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%230f172a'/></svg>" alt="Original SAR">
+              </div>
+
+              <div class="panel-box">
+                <div class="panel-header">2. Grad-CAM Heatmap</div>
+                <img id="preview-gradcam" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%230f172a'/></svg>" alt="Grad-CAM Heatmap">
+              </div>
+
+              <div class="panel-box">
+                <div class="panel-header">3. Blended Overlay</div>
+                <img id="preview-overlay" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%230f172a'/></svg>" alt="Blended Overlay">
+              </div>
+            </div>
+
+            <!-- Model Decision Explanation -->
+            <div class="explanation-box" id="model-explanation-box">
+              <strong>Model Decision Attribution (Grad-CAM):</strong>
+              <p id="model-explanation-text">The model analyzes dark capillary wave dampening regions in microwave backscatter to classify oil slicks versus look-alikes.</p>
+            </div>
+
+            <!-- Metadata Strip -->
+            <div class="metadata-strip">
+              <span><strong>Model:</strong> EfficientNet-B0</span>
+              <span><strong>Version:</strong> <span id="meta-model-version">v1.0</span></span>
+              <span><strong>Inference Status:</strong> <span style="color: var(--alert-green);">Completed</span></span>
+              <span><strong>Latency:</strong> <span id="meta-latency">--</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: INCIDENT HISTORY -->
+    <div id="incidents-panel" class="tab-panel">
+      <div class="card">
+        <h2 class="card-title">
+          <span>📋</span> Incident Detection History
+          <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim); margin-left: auto;">
+            Stored in persistent SQLite database &bull; Architectural hooks for geospatial coordinates & AIS attribution
+          </span>
+        </h2>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>SAR Chip</th>
+                <th>AI Classification</th>
+                <th>Confidence</th>
+                <th>Model</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="incidents-tbody">
+              <!-- Dynamically rendered incident rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: MODEL INTELLIGENCE -->
+    <div id="model-panel" class="tab-panel">
+      <!-- Live KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-accuracy">94.82%</div>
+          <div class="kpi-label">Test Accuracy</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-f1">0.9234</div>
+          <div class="kpi-label">Test F1-Score</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-precision">91.20%</div>
+          <div class="kpi-label">Test Precision</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-recall">93.50%</div>
+          <div class="kpi-label">Test Recall</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-auc">0.9821</div>
+          <div class="kpi-label">ROC-AUC</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpi-specificity">95.48%</div>
+          <div class="kpi-label">Specificity</div>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <!-- Model Specifications -->
+        <div class="card">
+          <h2 class="card-title"><span>🧬</span> Model Architecture & Dataset Provenance</h2>
+          <table style="font-size: 0.82rem;">
+            <tbody>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Dataset Collection</td>
+                <td style="font-weight: bold; color: var(--accent-cyan-light);">CSIRO / Kaggle Sentinel-1 SAR Oil Spill Detection Dataset</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Classification Task</td>
+                <td>Binary (Class 0: No Oil Spill / Class 1: Oil Spill)</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Selected Architecture</td>
+                <td id="stat-model-name" style="font-family: var(--font-mono); font-weight: bold;">EFFICIENTNET_B0</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Curated Dataset Total</td>
+                <td><strong id="stat-total-chips">5,528</strong> valid 400x400 chips (10 zero-variance artifacts filtered)</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Training Split (70%)</td>
+                <td><span id="stat-train-chips">3,869</span> chips (Class-weighted Cross-Entropy Loss: w0=0.75, w1=1.50)</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Validation Split (15%)</td>
+                <td><span id="stat-val-chips">829</span> chips (Early stopping monitor)</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Held-Out Test Split (15%)</td>
+                <td><span id="stat-test-chips">830</span> unseen chips (Zero data leakage verified)</td>
+              </tr>
+              <tr>
+                <td style="color: var(--text-muted); font-weight: 600;">Explainability Layer</td>
+                <td>Penultimate Feature Convolutional Hook (Grad-CAM)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 1.25rem;">
+            <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">
+              Held-Out Test Set Confusion Matrix (830 Chips)
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-family: var(--font-mono); font-size: 0.8rem;">
+              <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                <div style="color: var(--text-muted); font-size: 0.7rem;">True Negative (No Oil)</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--alert-green);" id="cm-tn">528</div>
+              </div>
+              <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                <div style="color: var(--text-muted); font-size: 0.7rem;">False Positive (Look-alike)</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--alert-red);" id="cm-fp">25</div>
+              </div>
+              <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                <div style="color: var(--text-muted); font-size: 0.7rem;">False Negative (Missed)</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--alert-red);" id="cm-fn">18</div>
+              </div>
+              <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                <div style="color: var(--text-muted); font-size: 0.7rem;">True Positive (Spill Found)</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--alert-green);" id="cm-tp">259</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Plots from Real Training/Evaluation -->
+        <div class="card">
+          <h2 class="card-title"><span>📈</span> Verified Evaluation Artifacts</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="panel-box">
+              <div class="panel-header">Confusion Matrix</div>
+              <img src="/static/uploads/../../outputs/reports/confusion_matrix.png" onerror="this.src='/static/reports/confusion_matrix.png'" alt="Confusion Matrix">
+            </div>
+            <div class="panel-box">
+              <div class="panel-header">ROC Curve (AUC=0.9821)</div>
+              <img src="/static/uploads/../../outputs/reports/roc_curve.png" onerror="this.src='/static/reports/roc_curve.png'" alt="ROC Curve">
+            </div>
+            <div class="panel-box">
+              <div class="panel-header">Precision-Recall Curve</div>
+              <img src="/static/uploads/../../outputs/reports/precision_recall_curve.png" onerror="this.src='/static/reports/precision_recall_curve.png'" alt="PR Curve">
+            </div>
+            <div class="panel-box">
+              <div class="panel-header">Learning Curves</div>
+              <img src="/static/uploads/../../outputs/reports/learning_curves.png" onerror="this.src='/static/reports/learning_curves.png'" alt="Learning Curves">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: FUTURE ARCHITECTURE ROADMAP -->
+    <div id="roadmap-panel" class="tab-panel">
+      <div class="card">
+        <h2 class="card-title"><span>🌐</span> Modular Architectural Roadmap & Scalability</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+          AQUAVISION is architected as an extensible maritime intelligence pipeline. Current Phase 1 provides the core AI detection and explainability layer. Subsequent phases integrate satellite telemetry, multi-sensor fusion, and autonomous investigation workflows.
+        </p>
+
+        <div class="roadmap-step">
+          <div class="roadmap-icon">🛰️</div>
+          <div class="roadmap-body">
+            <h4>1. Real Satellite Imagery Ingestion <span class="future-badge">Phase 2</span></h4>
+            <p>Automated Sentinel-1 C-band SAR GRD acquisition via Copernicus Data Space Ecosystem API with orbit vector parsing and orthorectification.</p>
+          </div>
+        </div>
+
+        <div class="roadmap-step">
+          <div class="roadmap-icon">🚢</div>
+          <div class="roadmap-body">
+            <h4>2. AIS Vessel Correlation Service <span class="future-badge">Phase 3</span></h4>
+            <p>Spatiotemporal AIS trajectory alignment identifying potentially relevant vessel candidates within the acquisition time window. Flagging AIS transponder gaps for maritime authority review (without unwarranted vessel accusation).</p>
+          </div>
+        </div>
+
+        <div class="roadmap-step">
+          <div class="roadmap-icon">🎯</div>
+          <div class="roadmap-body">
+            <h4>3. High-Resolution Spill Segmentation (U-Net++ / SegFormer) <span class="future-badge">Phase 4</span></h4>
+            <p>Pixel-level polygon boundary delineation separate from Grad-CAM attention visualizations, computing accurate spill surface area ($km^2$).</p>
+          </div>
+        </div>
+
+        <div class="roadmap-step">
+          <div class="roadmap-icon">🌊</div>
+          <div class="roadmap-body">
+            <h4>4. Hydrodynamic & Ocean Current Drift Modeling <span class="future-badge">Phase 5</span></h4>
+            <p>Integration of Copernicus Marine Environment Monitoring Service (CMEMS) surface current vectors and ECMWF wind models for forward spill trajectory forecasting.</p>
+          </div>
+        </div>
+
+        <div class="roadmap-step">
+          <div class="roadmap-icon">🤖</div>
+          <div class="roadmap-body">
+            <h4>5. Autonomous AI Maritime Investigation Agent <span class="future-badge">Phase 6</span></h4>
+            <p>Agentic orchestration layer consuming structured computer vision evidence, cross-referencing multi-modal feeds, and drafting standardized maritime incident dossiers for coast guard authorities.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Incident Details Modal -->
+  <div id="incident-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeIncidentModal()">&times;</button>
+      <h3 id="modal-incident-title" style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">Incident Details</h3>
+      <div id="modal-incident-meta" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-dim); margin-bottom: 1.25rem;"></div>
+
+      <div class="inspector-grid" style="margin-bottom: 1.25rem;">
+        <div class="panel-box">
+          <div class="panel-header">Original SAR Chip</div>
+          <img id="modal-orig-img" src="" alt="Original">
+        </div>
+        <div class="panel-box">
+          <div class="panel-header">Grad-CAM Heatmap</div>
+          <img id="modal-cam-img" src="" alt="Heatmap">
+        </div>
+        <div class="panel-box">
+          <div class="panel-header">Blended Overlay</div>
+          <img id="modal-overlay-img" src="" alt="Overlay">
+        </div>
+      </div>
+
+      <div class="explanation-box" id="modal-incident-desc"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
