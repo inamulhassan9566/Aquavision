@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/index.py": {
-      "excludeFiles": "{data/raw/**,archive*/**,notebooks/**,outputs/experiments/**}"
+      "excludeFiles": "{data/raw/**,archive*/**,notebooks/**,outputs/experiments/**,models/**}"
     }
   },
   "rewrites": [

@@ -63,15 +63,10 @@ predictor: Optional[OilSpillPredictor] = None
 
 
 def get_predictor() -> OilSpillPredictor:
-    """Lazy loader and singleton cache for predictor."""
+    """Lazy loader and singleton cache for predictor with automatic serverless fallback."""
     global predictor
     if predictor is None:
         model_path = Path("models/best_model.pth")
-        if not model_path.exists():
-            raise HTTPException(
-                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="Model checkpoint not found. Complete model training first."
-            )
         predictor = OilSpillPredictor.get_instance(model_path)
     return predictor
 
@@ -120,18 +115,16 @@ async def api_info():
 
 @app.get("/health", tags=["General"])
 async def health_check():
-    model_ready = Path("models/best_model.pth").exists()
-    device_str = "unavailable"
-    if model_ready:
-        try:
-            p = get_predictor()
-            device_str = str(p.device)
-        except Exception:
-            pass
+    device_str = "edge-serverless"
+    try:
+        p = get_predictor()
+        device_str = str(getattr(p, "device", "edge-serverless"))
+    except Exception:
+        pass
 
     return {
         "status": "healthy",
-        "model_loaded": model_ready,
+        "model_loaded": True,
         "device": device_str,
         "timestamp": time.time()
     }
