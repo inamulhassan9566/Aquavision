@@ -1,50 +1,82 @@
 [
   {
-    "filename": "class_1_01727.jpg",
+    "filename": "class_1_00001.jpg",
     "class_id": 1,
     "class_name": "Oil Spill",
-    "url": "/static/samples/class_1_01727.jpg"
+    "url": "/static/samples/class_1_00001.jpg",
+    "expected_prediction": "Oil Spill",
+    "confidence": 1.0
   },
   {
-    "filename": "class_1_01082.jpg",
+    "filename": "class_1_00002.jpg",
     "class_id": 1,
     "class_name": "Oil Spill",
-    "url": "/static/samples/class_1_01082.jpg"
+    "url": "/static/samples/class_1_00002.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.811
   },
   {
-    "filename": "class_1_01280.jpg",
+    "filename": "class_1_00003.jpg",
     "class_id": 1,
     "class_name": "Oil Spill",
-    "url": "/static/samples/class_1_01280.jpg"
+    "url": "/static/samples/class_1_00003.jpg",
+    "expected_prediction": "Oil Spill",
+    "confidence": 0.977
   },
   {
-    "filename": "class_1_01785.jpg",
+    "filename": "class_1_00004.jpg",
     "class_id": 1,
     "class_name": "Oil Spill",
-    "url": "/static/samples/class_1_01785.jpg"
+    "url": "/static/samples/class_1_00004.jpg",
+    "expected_prediction": "Oil Spill",
+    "confidence": 1.0
   },
   {
-    "filename": "class_0_02361.jpg",
-    "class_id": 0,
-    "class_name": "No Oil Spill",
-    "url": "/static/samples/class_0_02361.jpg"
+    "filename": "class_1_00005.jpg",
+    "class_id": 1,
+    "class_name": "Oil Spill",
+    "url": "/static/samples/class_1_00005.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.554
   },
   {
-    "filename": "class_0_00405.jpg",
+    "filename": "class_0_00001.jpg",
     "class_id": 0,
     "class_name": "No Oil Spill",
-    "url": "/static/samples/class_0_00405.jpg"
+    "url": "/static/samples/class_0_00001.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.99
   },
   {
-    "filename": "class_0_03291.jpg",
+    "filename": "class_0_00002.jpg",
     "class_id": 0,
     "class_name": "No Oil Spill",
-    "url": "/static/samples/class_0_03291.jpg"
+    "url": "/static/samples/class_0_00002.jpg",
+    "expected_prediction": "Oil Spill",
+    "confidence": 0.988
   },
   {
-    "filename": "class_0_02818.jpg",
+    "filename": "class_0_00003.jpg",
     "class_id": 0,
     "class_name": "No Oil Spill",
-    "url": "/static/samples/class_0_02818.jpg"
+    "url": "/static/samples/class_0_00003.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.997
+  },
+  {
+    "filename": "class_0_00004.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_00004.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.942
+  },
+  {
+    "filename": "class_0_00005.jpg",
+    "class_id": 0,
+    "class_name": "No Oil Spill",
+    "url": "/static/samples/class_0_00005.jpg",
+    "expected_prediction": "No Oil Spill",
+    "confidence": 0.998
   }
 ]

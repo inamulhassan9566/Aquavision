@@ -114,6 +114,16 @@ async def handle_index_py(request: Request):
         if file_obj:
             return await predict_with_explanation(file=file_obj)
         return JSONResponse({"status": "received", "detail": "No file in POST request"})
+    
+    matched = request.headers.get("x-matched-path", "")
+    if "samples" in matched:
+        return await get_samples()
+    if "model-info" in matched:
+        return await get_model_info()
+    if "incidents" in matched:
+        return await get_incidents()
+    if "health" in matched:
+        return await health_check()
     return await root()
 
 

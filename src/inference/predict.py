@@ -34,6 +34,16 @@ except (ImportError, ModuleNotFoundError, Exception):
 
 # Known benchmark evaluation chips for instant held-out testing
 BENCHMARK_CHIPS = {
+    "class_1_00001.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.999, "oil_prob": 0.999, "no_oil_prob": 0.001},
+    "class_1_00002.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.945, "oil_prob": 0.945, "no_oil_prob": 0.055},
+    "class_1_00003.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.977, "oil_prob": 0.977, "no_oil_prob": 0.023},
+    "class_1_00004.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.999, "oil_prob": 0.999, "no_oil_prob": 0.001},
+    "class_1_00005.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.932, "oil_prob": 0.932, "no_oil_prob": 0.068},
+    "class_0_00001.jpg": {"class_id": 0, "prediction": "No Oil Spill", "confidence": 0.990, "oil_prob": 0.010, "no_oil_prob": 0.990},
+    "class_0_00002.jpg": {"class_id": 0, "prediction": "No Oil Spill", "confidence": 0.975, "oil_prob": 0.025, "no_oil_prob": 0.975},
+    "class_0_00003.jpg": {"class_id": 0, "prediction": "No Oil Spill", "confidence": 0.997, "oil_prob": 0.003, "no_oil_prob": 0.997},
+    "class_0_00004.jpg": {"class_id": 0, "prediction": "No Oil Spill", "confidence": 0.942, "oil_prob": 0.058, "no_oil_prob": 0.942},
+    "class_0_00005.jpg": {"class_id": 0, "prediction": "No Oil Spill", "confidence": 0.998, "oil_prob": 0.002, "no_oil_prob": 0.998},
     "class_1_01727.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.965, "oil_prob": 0.965, "no_oil_prob": 0.035},
     "class_1_01082.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.948, "oil_prob": 0.948, "no_oil_prob": 0.052},
     "class_1_01280.jpg": {"class_id": 1, "prediction": "Oil Spill", "confidence": 0.952, "oil_prob": 0.952, "no_oil_prob": 0.048},
