@@ -87,7 +87,6 @@ from fastapi.responses import JSONResponse, FileResponse
 
 
 @app.get("/", tags=["General"], response_class=FileResponse)
-@app.get("/api/index.py", tags=["General"], response_class=FileResponse)
 async def root():
     """Serves the AQUAVISION interactive dashboard."""
     for candidate in [
@@ -102,6 +101,20 @@ async def root():
         "status": "online",
         "version": "1.0.0"
     })
+
+
+from fastapi import Request
+
+
+@app.api_route("/api/index.py", methods=["GET", "POST", "OPTIONS"])
+async def handle_index_py(request: Request):
+    if request.method == "POST":
+        form = await request.form()
+        file_obj = form.get("file")
+        if file_obj:
+            return await predict_with_explanation(file=file_obj)
+        return JSONResponse({"status": "received", "detail": "No file in POST request"})
+    return await root()
 
 
 @app.get("/api", tags=["General"])
