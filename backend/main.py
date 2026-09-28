@@ -87,11 +87,15 @@ from fastapi.responses import JSONResponse, FileResponse
 
 
 @app.get("/", tags=["General"], response_class=FileResponse)
+@app.get("/api/index.py", tags=["General"], response_class=FileResponse)
 async def root():
     """Serves the AQUAVISION interactive dashboard."""
-    index_file = Path("backend/static/index.html")
-    if index_file.exists():
-        return FileResponse(index_file)
+    for candidate in [
+        Path("public/index.html"),
+        Path("backend/static/index.html")
+    ]:
+        if candidate.exists():
+            return FileResponse(candidate)
     return JSONResponse({
         "project": "AQUAVISION",
         "tagline": "AI Maritime Intelligence — Oil Spill Detection and Attribution",
@@ -114,6 +118,7 @@ async def api_info():
 
 
 @app.get("/health", tags=["General"])
+@app.get("/api/health", tags=["General"])
 async def health_check():
     device_str = "edge-serverless"
     try:
@@ -131,6 +136,7 @@ async def health_check():
 
 
 @app.get("/model-info", tags=["Model Analytics"])
+@app.get("/api/model-info", tags=["Model Analytics"])
 async def get_model_info():
     """Returns dynamic model evaluation report and dataset statistics."""
     report_file = Path("outputs/reports/model_report.json")
@@ -146,6 +152,7 @@ async def get_model_info():
 
 
 @app.get("/samples", tags=["General"])
+@app.get("/api/samples", tags=["General"])
 async def get_samples():
     """Returns preset test SAR chips for one-click demo testing."""
     manifest_file = Path("backend/static/samples/manifest.json")
@@ -173,6 +180,7 @@ def validate_image_file(file: UploadFile) -> str:
 
 
 @app.post("/predict", tags=["Inference"])
+@app.post("/api/predict", tags=["Inference"])
 async def predict_image(file: UploadFile = File(...)):
     """Runs fast classification without Grad-CAM image generation."""
     validate_image_file(file)
@@ -189,6 +197,7 @@ async def predict_image(file: UploadFile = File(...)):
 
 
 @app.post("/predict-with-explanation", tags=["Inference"])
+@app.post("/api/predict-with-explanation", tags=["Inference"])
 async def predict_with_explanation(file: UploadFile = File(...)):
     """
     Performs full inference:
@@ -268,12 +277,14 @@ async def predict_with_explanation(file: UploadFile = File(...)):
 
 
 @app.get("/incidents", tags=["Incidents"])
+@app.get("/api/incidents", tags=["Incidents"])
 async def list_incidents(limit: int = Query(default=100, ge=1, le=500)):
     """Retrieves list of previous oil spill detection incidents."""
     return get_all_incidents(limit=limit)
 
 
 @app.get("/incidents/{incident_id}", tags=["Incidents"])
+@app.get("/api/incidents/{incident_id}", tags=["Incidents"])
 async def get_incident(incident_id: int):
     """Retrieves a single incident by its ID."""
     row = get_incident_by_id(incident_id)

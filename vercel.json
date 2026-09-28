@@ -6,8 +6,32 @@
   },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/samples",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/model-info",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/incidents(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/predict(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
     }
   ]
 }
