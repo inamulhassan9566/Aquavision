@@ -213,7 +213,7 @@ async def predict_image(file: UploadFile = File(...)):
 
     try:
         p = get_predictor()
-        res = p.predict(contents, generate_explanation=False)
+        res = p.predict(contents, orig_filename=file.filename, generate_explanation=False)
         return res
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Inference error: {str(e)}")
@@ -246,6 +246,7 @@ async def predict_with_explanation(file: UploadFile = File(...)):
         p = get_predictor()
         res = p.predict(
             pil_img,
+            orig_filename=file.filename,
             generate_explanation=True,
             save_artifacts_dir=UPLOAD_DIR
         )

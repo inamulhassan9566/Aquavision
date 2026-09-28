@@ -141,6 +141,7 @@ class OilSpillPredictor:
     def predict(
         self,
         image_input: Union[str, Path, bytes, Image.Image],
+        orig_filename: Optional[str] = None,
         generate_explanation: bool = True,
         save_artifacts_dir: Optional[Path] = None
     ) -> Dict[str, Any]:
@@ -148,19 +149,24 @@ class OilSpillPredictor:
         Executes end-to-end inference and visual attention generation.
         """
         # 1. Parse Image
-        orig_filename = ""
+        parsed_name = orig_filename or ""
         if isinstance(image_input, (str, Path)):
             raw_path = Path(image_input)
             pil_img = Image.open(raw_path)
-            orig_filename = raw_path.name
+            if not parsed_name:
+                parsed_name = raw_path.name
         elif isinstance(image_input, bytes):
             pil_img = Image.open(io.BytesIO(image_input))
-            orig_filename = f"upload_{int(time.time()*1000)}.jpg"
+            if not parsed_name:
+                parsed_name = f"upload_{int(time.time()*1000)}.jpg"
         elif isinstance(image_input, Image.Image):
             pil_img = image_input
-            orig_filename = f"image_{int(time.time()*1000)}.jpg"
+            if not parsed_name:
+                parsed_name = f"image_{int(time.time()*1000)}.jpg"
         else:
             raise ValueError("Unsupported image input type.")
+
+        orig_filename = parsed_name
 
         if pil_img.mode != "RGB":
             pil_img = pil_img.convert("RGB")
