@@ -1,8 +1,6 @@
 {
   "functions": {
     "api/index.py": {
-      "maxDuration": 60,
-      "memory": 3008,
       "excludeFiles": "{data/raw/**,archive*/**,notebooks/**,outputs/experiments/**}"
     }
   },
