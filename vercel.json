@@ -6,8 +6,8 @@
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "source": "/",
+      "destination": "/static/index.html"
     },
     {
       "source": "/samples",
@@ -30,8 +30,8 @@
       "destination": "/api/index.py"
     },
     {
-      "source": "/",
-      "destination": "/index.html"
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     }
   ]
 }
